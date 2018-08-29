@@ -8,9 +8,9 @@ using Microsoft.Azure.WebJobs.Host;
 
 namespace mrnotes
 {
-    public static class notes
+    public static class MRNotes
     {
-        [FunctionName("mrnotes")]
+        [FunctionName("MRNotes")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");

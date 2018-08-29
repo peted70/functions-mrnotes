@@ -18,7 +18,7 @@ namespace MRNotes
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             string requestBody = new StreamReader(req.Body).ReadToEnd();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
+            var data = (MRNote)JsonConvert.DeserializeObject(requestBody);
             DataSource.Notes.Add(data);
 
             return new OkObjectResult(data);

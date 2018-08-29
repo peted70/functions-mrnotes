@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace MRNotes
 {
-    public static class MRNotes
+    public static class GetMRNotes
     {
         [FunctionName("MRNotes")]
         public static IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "MRNotes")]HttpRequest req, ILogger log)

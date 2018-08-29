@@ -18,7 +18,11 @@ namespace MRNotes
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             string requestBody = new StreamReader(req.Body).ReadToEnd();
-            var data = (MRNote)JsonConvert.DeserializeObject(requestBody);
+            var data = JsonConvert.DeserializeObject<MRNote>(requestBody, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
+
             DataSource.Notes.Add(data);
 
             return new OkObjectResult(data);

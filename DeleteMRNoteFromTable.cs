@@ -12,15 +12,15 @@ using System.Threading.Tasks;
 
 namespace MRNotes
 {
- 
-    public static class GetMRNotesFromTable
+    public static class DeleteMRNoteFromTable
     {
         private static TableStorageDataSource _dataSource;
 
-        [FunctionName("GetMRNotesFromTable")]
-        public async static Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "table/MRNotes")]HttpRequest req,
+        [FunctionName("DeleteMRNoteFromTable")]
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "MRNotes/{id}")]HttpRequest req,
             [Table("mrnotes", Connection = "AzureWebJobsStorage")] CloudTable notesTable,
-            ILogger log)
+            ILogger log,
+            string id)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
@@ -29,9 +29,9 @@ namespace MRNotes
                 _dataSource = new TableStorageDataSource(notesTable);
             }
 
-            var notes = await _dataSource.GetNotesAsync();
+            var note = await _dataSource.DeleteNoteAsync(id);
 
-            return new OkObjectResult(notes);
+            return new OkObjectResult(note);
         }
     }
 }

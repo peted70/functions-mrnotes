@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace MRNotes
 {
     interface IDataSource
     {
-        IEnumerable<MRNote> GetNotes();
-        void AddNote(MRNote note);
-        MRNote DeleteNote(string id);
+        Task<IEnumerable<MRNote>> GetNotesAsync();
+        Task AddNoteAsync(MRNote note);
+        Task<MRNote> DeleteNoteAsync(string id);
     }
 
     class DataSource

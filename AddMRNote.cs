@@ -7,13 +7,14 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace MRNotes
 {
     public static class AddMRNote
     {
         [FunctionName("AddMRNote")]
-        public static IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "MRNotes")]HttpRequest req, ILogger log)
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "MRNotes")]HttpRequest req, ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
@@ -23,7 +24,7 @@ namespace MRNotes
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
             });
 
-            DataSource.Instance().AddNote(data);
+            await DataSource.Instance().AddNoteAsync(data);
             return new OkObjectResult(data);
         }
     }

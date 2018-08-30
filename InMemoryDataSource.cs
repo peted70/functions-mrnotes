@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace MRNotes
 {
@@ -18,22 +19,23 @@ namespace MRNotes
             }
         };
 
-        public void AddNote(MRNote note)
-        {
-            Notes.Add(note);
-        }
-
-        public MRNote DeleteNote(string id)
+         public Task<MRNote> DeleteNoteAsync(string id)
         {
             var item = Notes.SingleOrDefault(n => n.Id == id);
             if (item != null)
                 Notes.Remove(item);
-            return item;
+            return Task.FromResult(item);
         }
 
-        public IEnumerable<MRNote> GetNotes()
+         public Task<IEnumerable<MRNote>> GetNotesAsync()
         {
-            return Notes;
+            return Task.FromResult(Notes.AsEnumerable());
+        }
+
+        Task IDataSource.AddNoteAsync(MRNote note)
+        {
+            Notes.Add(note);
+            return Task.FromResult(0);
         }
     }
 }

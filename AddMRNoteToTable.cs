@@ -7,18 +7,17 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
-using Microsoft.WindowsAzure.Storage.Table;
 using System.Threading.Tasks;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace MRNotes
 {
- 
-    public static class GetMRNotesFromTable
+    public static class AddMRNoteToTable
     {
         private static TableStorageDataSource _dataSource;
 
-        [FunctionName("GetMRNotesFromTable")]
-        public async static Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "table/MRNotes")]HttpRequest req,
+        [FunctionName("AddMRNoteToTable")]
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "table/MRNotes")]HttpRequest req,
             [Table("mrnotes", Connection = "AzureWebJobsStorage")] CloudTable notesTable,
             ILogger log)
         {
@@ -29,9 +28,14 @@ namespace MRNotes
                 _dataSource = new TableStorageDataSource(notesTable);
             }
 
-            var notes = await _dataSource.GetNotesAsync();
+            string requestBody = new StreamReader(req.Body).ReadToEnd();
+            var data = JsonConvert.DeserializeObject<MRNote>(requestBody, new JsonSerializerSettings
+            {
+                DateTimeZoneHandling = DateTimeZoneHandling.Utc
+            });
 
-            return new OkObjectResult(notes);
+            await _dataSource.AddNoteAsync(data);
+            return new OkObjectResult(data);
         }
     }
 }

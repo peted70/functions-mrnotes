@@ -23,8 +23,7 @@ namespace MRNotes
                 DateTimeZoneHandling = DateTimeZoneHandling.Utc
             });
 
-            DataSource.Notes.Add(data);
-
+            DataSource.Instance().AddNote(data);
             return new OkObjectResult(data);
         }
     }

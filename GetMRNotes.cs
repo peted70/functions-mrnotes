@@ -16,7 +16,7 @@ namespace MRNotes
         public static IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "MRNotes")]HttpRequest req, ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-            return new OkObjectResult(DataSource.Notes);
+            return new OkObjectResult(DataSource.Instance().GetNotes());
         }
     }
 }

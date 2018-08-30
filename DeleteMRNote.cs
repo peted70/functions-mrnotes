@@ -19,12 +19,11 @@ namespace MRNotes
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
 
-            var item = DataSource.Notes.SingleOrDefault(x => x.Id == id);
+            var deleted = DataSource.Instance().DeleteNote(id);
 
-            if (item != null)
+            if (deleted != null)
             {
-                DataSource.Notes.Remove(item);
-                return new OkObjectResult(item);
+                return new OkObjectResult(deleted);
             }
 
             return new NotFoundObjectResult(id);

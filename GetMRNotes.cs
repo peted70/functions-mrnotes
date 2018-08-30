@@ -12,7 +12,7 @@ namespace MRNotes
 {
     public static class GetMRNotes
     {
-        [FunctionName("MRNotes")]
+        [FunctionName("GetMRNotes")]
         public static IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "MRNotes")]HttpRequest req, ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");

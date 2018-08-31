@@ -17,7 +17,7 @@ namespace MRNotes
         private static TableStorageDataSource _dataSource;
 
         [FunctionName("AddMRNoteToTable")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "table/MRNotes")]HttpRequest req,
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "tableMRNotes")]HttpRequest req,
             [Table("mrnotes", Connection = "AzureWebJobsStorage")] CloudTable notesTable,
             ILogger log)
         {

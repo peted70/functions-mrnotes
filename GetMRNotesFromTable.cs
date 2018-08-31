@@ -18,7 +18,7 @@ namespace MRNotes
         private static TableStorageDataSource _dataSource;
 
         [FunctionName("GetMRNotesFromTable")]
-        public async static Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "table/MRNotes")]HttpRequest req,
+        public async static Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "tableMRNotes")]HttpRequest req,
             [Table("mrnotes", Connection = "AzureWebJobsStorage")] CloudTable notesTable,
             ILogger log)
         {

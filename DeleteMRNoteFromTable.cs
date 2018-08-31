@@ -17,7 +17,7 @@ namespace MRNotes
         private static TableStorageDataSource _dataSource;
 
         [FunctionName("DeleteMRNoteFromTable")]
-        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "MRNotes/{id}")]HttpRequest req,
+        public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "delete", Route = "tableMRNotes/{id}")]HttpRequest req,
             [Table("mrnotes", Connection = "AzureWebJobsStorage")] CloudTable notesTable,
             ILogger log,
             string id)

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MRNotes
 {
-    internal class MRNote
+    public class MRNote
     {
         public string Id { get; set; } = Guid.NewGuid().ToString();
 

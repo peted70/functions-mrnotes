@@ -16,7 +16,7 @@ namespace mrnotes.CosmosDB
     {
         [FunctionName("GetMRNotesCosmos")]
         public static IActionResult Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "cosmosmrnotes")]HttpRequest req,
-[CosmosDB(
+        [CosmosDB(
         databaseName: "mrnotes",
         collectionName: "notes",
         ConnectionStringSetting = "CosmosDBConnection",
@@ -25,16 +25,7 @@ namespace mrnotes.CosmosDB
             ILogger log)
         {
             log.LogInformation("C# HTTP trigger function processed a request.");
-
-            string name = req.Query["name"];
-
-            string requestBody = new StreamReader(req.Body).ReadToEnd();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
-
-            return name != null
-                ? (ActionResult)new OkObjectResult($"Hello, {name}")
-                : new BadRequestObjectResult("Please pass a name on the query string or in the request body");
+            return new OkObjectResult(notes);
         }
     }
 }
